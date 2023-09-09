@@ -23,9 +23,7 @@ var usersRouter = require("./routes/users");
 
 var app = express();
 
-app.use(cors({
-  origin: "http://localhost:3000"
-}));
+app.use(cors());
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -38,6 +36,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
+app.use(express.static(__dirname));
 app.use("/users", usersRouter);
 app.use("/account", account);
 app.use("/login", login);

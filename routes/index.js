@@ -1,9 +1,10 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
-/* GET home page. */
+// เพิ่มการรองรับการแสดง HTML โดยใช้ res.sendFile
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  // ระบุไฟล์ HTML ที่คุณต้องการแสดง
+  res.sendFile(__dirname + '/index.html');
 });
 
 module.exports = router;

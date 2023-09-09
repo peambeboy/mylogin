@@ -30,40 +30,6 @@ router.get("/:id", (req, res, next) => {
     });
 });
 
-router.post("/signup", async (req, res, next) => {
-  const { username, email, password } = req.body;
-
-  if (!username || !email || !password) {
-    return res
-      .status(400)
-      .json({ success: false, message: "โปรดกรอกข้อมูลให้ครบทุกช่อง" });
-  }
-
-  try {
-    // ตรวจสอบว่าชื่อผู้ใช้หรืออีเมลซ้ำกันหรือไม่
-    const existingUser = await Users.findOne({
-      $or: [{ username }, { email }],
-    });
-
-    if (existingUser) {
-      return res.status(400).json({
-        success: false,
-        errorMessage: "ชื่อผู้ใช้หรืออีเมลนี้ถูกใช้แล้ว",
-      });
-    }
-
-    // สร้างบัญชีผู้ใช้ใหม่
-    const newUser = new Users({ username, email, password });
-    await newUser.save();
-    res.json({ success: true, message: "สมัครสมาชิกสำเร็จ", user: newUser });
-  } catch (error) {
-    console.error("Error creating data:", error);
-    res
-      .status(500)
-      .json({ success: false, errorMessage: "Internal Server Error" });
-  }
-});
-
 router.put("/update/:id", (req, res, next) => {
   const { id } = req.params;
   const updatedData = {
